@@ -34,9 +34,11 @@ class Timer {
     this.isActive = false;
     this.onTick = onTick;
 
+
     this.init();
     
     }
+    
     init(){
     const time = this.getTimeComponents(0);
     this.onTick(time);
@@ -50,13 +52,27 @@ class Timer {
         this.isActive = true;
 
         this.intervalId = setInterval(() =>{
+           
+
             const currentTime = new Date().getTime(); 
             const deltaTime = startTime - currentTime;
+
+            if(deltaTime <= 0) {
+                clearInterval(this.intervalId); 
+                return;
+            }
+            
             const time = this.getTimeComponents(deltaTime);
         
             this.onTick(time);
+            
+            
         }, 1000);
+        
+    
     }
+    
+    
 
     addLeadingZero(value){
         return String(value).padStart(2, '0')
@@ -86,6 +102,7 @@ class Timer {
 
 const timer = new Timer({
     onTick: updateClockfase,
+
 });
 
 refs.startBtn.addEventListener('click', timer.start.bind(timer));
