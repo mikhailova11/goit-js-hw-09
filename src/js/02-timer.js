@@ -58,10 +58,11 @@ class Timer {
             const deltaTime = startTime - currentTime;
 
             if(deltaTime <= 0) {
-                clearInterval(this.intervalId); 
+                clearInterval(this.intervalId);
+                Notify.failure(`Time is over`);
                 return;
             }
-            
+
             const time = this.getTimeComponents(deltaTime);
         
             this.onTick(time);
